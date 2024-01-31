@@ -15,23 +15,66 @@
                 <span id="min">00</span>
                 <span>:</span>
                 <span id="sec">00</span>
+                <span id="ampm"></span>
+                
             </div>
+        
+                <div class="switch">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                </div>
+                
+            
         </div>
-
     </div>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
     let hrs = document.getElementById("hours");
     let min = document.getElementById("min");
     let sec = document.getElementById("sec");
+    let ampm = document.getElementById("ampm");
+    const formatSwitch = document.getElementById('checkbox');
+    
+    
 
+
+
+    
+
+
+
+function timeDisplay(){
+    console.log(formatSwitch.value);
     setInterval(()=>{
         let currentTime= new Date();
+        
+
+        if(formatSwitch.checked) {
+            
+            hrs.innerHTML=(currentTime.getHours() %12 || 12);
+            min.innerHTML=(currentTime.getMinutes()<10?"0":"") + currentTime.getMinutes();
+            sec.innerHTML=(currentTime.getSeconds()<10?"0":"") + currentTime.getSeconds();
+            if(currentTime.getHours >= 12){
+                ampm.innerHTML=  "AM";
+            } else {
+                ampm.innerHTML=  "PM";
+            }
+        }
+        else{
     
         hrs.innerHTML=(currentTime.getHours()<10?"0":"") + currentTime.getHours();
         min.innerHTML=(currentTime.getMinutes()<10?"0":"") + currentTime.getMinutes();
         sec.innerHTML=(currentTime.getSeconds()<10?"0":"") + currentTime.getSeconds();
+        ampm.innerHTML=  "";
+        }
     },1000)
+}
+timeDisplay();
+    formatSwitch.addEventListener("input",timeDisplay);
 
+    });
    
 </script>
 </body>
